@@ -1,0 +1,26 @@
+apply plugin: 'scala'
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.11.7'
+
+    testCompile 'org.scalatest:scalatest_2.11:2.2.5'
+}
+
+/*compileScala {
+    scalaCompileOptions.useCompileDaemon = true
+    scalaCompileOptions.daemonServer = "localhost:4243"
+}*/
+
+// Required to run scala test
+task spec(dependsOn: ['testClasses'], type: JavaExec) {
+    main = 'org.scalatest.tools.Runner'
+    args = ['-R', 'build/classes/test', '-o']
+    classpath = sourceSets.test.runtimeClasspath
+}
+
